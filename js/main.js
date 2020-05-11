@@ -229,4 +229,37 @@ function ocultaGestioPacients(objecteRebut){
       eleID_divControls.classList.toggle("d-none");
       mostraBotons();
    }
-   
+function crearHospital() {
+      var nom = document.getElementById("inputNomHospital").value.toString();
+      var maximPacients = parseInt(document.getElementById("maximPacientsHospital").value);
+      if (nom !== "" && maximPacients > 0) {
+            var hospital = new Hospital(nom, maximPacients);
+            ocultaGestioHospital(this);
+            mostraGestioPacients(this);
+            var cadenaFilaPacient_1, cadenaFilaPacient_2, cadenaFilaPacient_3;
+            cadenaFilaPacient_1 = '<div class="row">' +
+                  '<div class="col mb-3">' +
+                  '<label for="nomPacient" class="font-weight-bold"> Nom del pacient: </label>' +
+                  '<input type="text" id="nomPacient';
+
+            cadenaFilaPacient_2 = '" class="form-control" required minlength="1" maxlength="100" />' +
+                  '  </div> <!-- <div class="col mb-3"> -->' +
+                  '  <div class="col mb-3">' +
+                  '    <label for="malaltia" class="font-weight-bold">Malaltia a tractar: </label>' +
+                  '    <input type="text" id="malaltia';
+            cadenaFilaPacient_3 = '" class="form-control" required minlength="1" maxlength="100" />' +
+                  '  </div> <!-- <div class="col mb-3"> -->' +
+                  '</div> <!-- <div class="row"> -->';
+
+            for (var pacient = 0; pacient < maximPacients; pacient++) {
+                  document.getElementById("dadesPacient").innerHTML += ('' +
+                        cadenaFilaPacient_1 +
+                        pacient.toString() +
+                        cadenaFilaPacient_2 +
+                        pacient.toString() +
+                        cadenaFilaPacient_3);
+            }
+
+      }
+}
+

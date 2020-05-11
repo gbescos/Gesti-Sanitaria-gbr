@@ -1,13 +1,13 @@
-'use strict'
+"use strict"
 
 class Hospital {
   constructor(nom, maximPacients, maximMetges) {
-    nomHospital = nom;
-    maximPacients = maximPacients;
-    pacientsIngressats = [];
-    ingressarPacient = ingressarPacient;
-    donarDaltaPacient = donarDaltaPacient;
-    morirPacient = morirPacient;
+    var nomHospital = nom;
+    var maximPacients = maximPacients;
+    var pacientsIngressats = [];
+    var ingressarPacient = ingressarPacient;
+    var donarDaltaPacient = donarDaltaPacient;
+    var morirPacient = morirPacient;
   }
   
     ingressarPacient(pacient) {
