@@ -1,5 +1,51 @@
 'use strict'
 
+//JQUERY per canviar el tema de la web de color
+$(document).ready(function () {
+      $('#canviatemaw').hide();
+      console.log("ready!");
+      $("#canviatemab").click(function () {
+            $('body').css("background-color", "black");
+            $('body').css("color", "white");
+            $('#canviatemab').hide();
+            $('#canviatemaw').show();
+      });
+      $("#canviatemaw").click(function () {
+            $('body').css("background-color", "white");
+            $('body').css("color", "black");
+            $('#canviatemaw').hide();
+            $('#canviatemab').show();
+      });
+
+      //Fer zoom al navegador
+      var currentZoom = 1;
+      $('#zoomin').click(function () {
+            if (currentZoom < 1.3) {
+                  currentZoom += 0.1;
+                  $('body').css({
+                        zoom: currentZoom,
+                        '-moz-transform': 'scale(' + currentZoom + ')'
+                  });
+            }
+      });
+      $('#zoomout').click(function () {
+            if (currentZoom >= 0.8) {
+                  currentZoom -= 0.1;
+                  $('body').css({
+                        zoom: currentZoom,
+                        '-moz-transform': 'scale(' + currentZoom + ')'
+                  });
+            }
+      });
+      $('#zoomdef').click(function () {
+            currentZoom = 1;
+            $('body').css({
+                  zoom: currentZoom,
+                  '-moz-transform': 'scale(' + currentZoom + ')'
+            });
+      });
+});
+
 const eleID_divEspaiModal = document.getElementById("divEspaiModal");
 
 const eleID_barra_missatges = document.getElementById("divBarraMissatges");
@@ -11,10 +57,13 @@ const eleID_divPacient = document.getElementById("divPacient");
 
 const eleID_divControls = document.getElementById("divControls");
 
+const eleID_divcanvis = document.getElementById("divCanvisVisuals");
+
 const eleID_btnGestHospitals = document.getElementById("btnGestHospitals");
 const eleID_btnGestPacients = document.getElementById("btnGestPacients");
 const eleID_btnGestMalalties = document.getElementById("btnGestMalalties");
 const eleID_btnGestMetges = document.getElementById("btnGestMetges");
+const eleID_btnCanVis = document.getElementById("btnCanVis");
 
 const eleID_btnGestAplicacio = document.getElementById("btnGestAplicacio");
 
@@ -93,6 +142,7 @@ function mostraBotons() {
       eleID_btnGestMalalties.disabled = false;
       eleID_btnGestMetges.disabled = false;
       eleID_btnGestAplicacio.disabled = false;
+      eleID_btnCanVis.disabled = false;
 
       $(eleID_btnGestHospitals).removeClass('btn-dark');
       $(eleID_btnGestHospitals).addClass('btn-primary');
@@ -108,6 +158,9 @@ function mostraBotons() {
 
       $(eleID_btnGestAplicacio).removeClass('btn-dark');
       $(eleID_btnGestAplicacio).addClass('btn-primary');
+
+      $(eleID_btnCanVis).removeClass('btn-dark');
+      $(eleID_btnCanVis).addClass('btn-primary');
 }
 
 function amagaBotons() {
@@ -116,6 +169,7 @@ function amagaBotons() {
       eleID_btnGestMalalties.disabled = true;
       eleID_btnGestMetges.disabled = true;
       eleID_btnGestAplicacio.disabled = true;
+      eleID_btnCanVis.disabled = true;
 
       $(eleID_btnGestHospitals).removeClass('btn-primary');
       $(eleID_btnGestHospitals).addClass('btn-dark');
@@ -131,6 +185,10 @@ function amagaBotons() {
 
       $(eleID_btnGestAplicacio).removeClass('btn-primary');
       $(eleID_btnGestAplicacio).addClass('btn-dark');
+
+      $(eleID_btnCanVis).removeClass('btn-primary');
+      $(eleID_btnCanVis).addClass('btn-dark');
+     
 }
 
 
@@ -181,6 +239,17 @@ function eliminaClass(elementRebut, nomClass) {
       amagaBotons();
    }
 
+
+function mostraCanvisVisuals(objecte) {
+      document.getElementById('tancaDivCanvis').onclick = function tanca() {
+            eleID_divPresentacio.classList.toggle("d-none");
+            eleID_divcanvis.classList.toggle("d-none");
+            mostraBotons();
+      }
+      eleID_divPresentacio.classList.toggle("d-none");
+      eleID_divcanvis.classList.toggle("d-none");
+      amagaBotons();
+}
 
     function mostraGestioMetges(objecte){
           mostraMissatge(0);
@@ -263,3 +332,42 @@ function crearHospital() {
       }
 }
 
+function ingressarPacients() {
+      console.log("entra");
+      var nom = "";
+      var malaltia = "";
+      debugger;
+      console.log(hospital);
+
+      for (var pacient = 0; pacient < hospital.maximPacients; pacient++) {
+            nom = document.getElementById("nomPacient" + pacient.toString()).value.toString();
+            malaltia = document.getElementById("malaltia" + pacient.toString()).value.toString();
+
+            if (nom !== "" && malaltia !== "") {
+                  if (hospital !== null) {
+                        hospital.ingressarPacient(new Pacient(nom, malaltia));
+                  }
+            }
+      }
+
+      if (hospital !== null && (hospital.pacientsIngressats.length <= hospital.maximPacients)) {
+            eleID_divPacients.classList.toggle("d-none");
+
+            // document.getElementById("nomHospitalGestio").innerHTML = hospital.nomHospital;
+            for (var pacient = 0; pacient < hospital.pacientsIngressats.length; pacient++) {
+                  document.getElementById("dadesGestio").innerHTML += ('<div class="row" id="dadesGestioPacient' + pacient.toString() + '">' +
+                        '<div class="col mb-3">' +
+                        '<label for="nomPacientGestio" class="font-weight-bold">Nom: </label>   <p id="nomPacientGestio' + pacient.toString() + '">' + hospital.pacientsIngressats[pacient].nom + '</p>' +
+                        '</div>' +
+                        '<div class="col mb-3">' +
+                        '<label for="malaltia" class="font-weight-bold">Malaltia: </label>  <p id="malaltiaGestio' + pacient.toString() + '">' + hospital.pacientsIngressats[pacient].malaltia + '</p>' +
+                        '</div>' +
+                        '<div class="col mb-3">' +
+                        '<button class="btn btn-success" title="Si el pacient s\'ha recuperat, el donarem d\'alta fent clic a aquest botó!" onClick="gestioDonarDalta(' + pacient + ')">Donar d\'alta</button> <button class="btn btn-danger" title="Si el pacient es mor, declarem la defunció fent clic a aquest botó!" onClick="gestioMorir(' + pacient + ')">Morir</button>' +
+                        '<div class="col mb-3">' +
+                        '</div>');
+            }
+            eleID_divGestio.classList.toggle("d-none");
+            // document.getElementById("divGestio").classList.remove("d-none");
+      }
+}

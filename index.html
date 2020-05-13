@@ -26,7 +26,48 @@
     <script src="./js/classes/Pacient.js"></script>
    
   </head>
+  <style>
+    #divPresentació{
+      color:black;
+    }
+    #divHospital{
+      color:black;
+    }
+    #divPacient{
+      color:black;
+    }
+    #divTractament{
+      color:black;
+    }
+    #divControl{
+      color:black;
+    }
+    #divCanvisVisuals{
+      color:black;
+    }
+    #divPresentacio{
+      color:black;
+    }
+  </style>
   <body>
+        <!-- Permet fer zoom per millorar la visualització-->
+        <div class="text-right">
+          <button title="Amplia el zoom de la web!" type="button" class="btn btn-danger mt-4" id="zoomin"
+            style="margin-right: 0.5%;">+</button>
+          <button title="Disminueix el zoom de la web!" type="button" class="btn btn-danger mt-4" id="zoomout"
+            style="margin-right: 0.5%;">-</button>
+          <button title="Zomm per defecte de la web!" type="button" class="btn btn-danger mt-4" id="zoomdef"
+            style="margin-right: 5%;">Defecte</button>
+        </div>
+        
+        <!-- Permet canviar el tema de color per una millor visualització-->
+        <div class="text-right">
+          <button title="Canviar el color de la web per una millor visualització!" type="button" class="btn btn-danger mt-4"
+            id="canviatemab" style="margin-right: 5.5%;">Canvia a mode fosc</button>
+          <button title="Canviar el color de la web per una millor visualització!" type="button" class="btn btn-danger mt-4"
+            id="canviatemaw" style="margin-right: 5.5%;">Canvia a mode clar</button>
+        </div>
+
     <!-- INICI container -->
     <div class="container">
       <h1  class="text-center mt-3 mb-3" >Aplicació gestió Sanitària</h1>
@@ -78,6 +119,8 @@
             <button type="button" id="btnGestMetges" class="btn btn-primary btn-block"  onClick="mostraGestioMetges()">Metges</button>
             <br>
             <button type="button" id="btnGestAplicacio" class="btn btn-primary btn-block"  onClick="mostraGestioApp()">Control</button>
+            <br>
+            <button type="button" id="btnCanVis" class="btn btn-primary btn-block" onClick="mostraCanvisVisuals()">Millores visuals</button>
             <!-- <button type="button" class="btn btn-primary  btn-block" data-toggle="modal" data-target="#espaiModal">Open modal</button> -->
         </div>
         <!-- FINAL COLUMNA 1 >md 02 < -- > bloc control equerre -->
@@ -172,6 +215,18 @@
           </div>
           <!-- FINAL divControls -->
         <!-- ------------------------------------------------------------------------------------ -->
+          <!-- ------------------------------------------------------------------------------------ -->
+            <!-- INICI divPacients -->
+            <div class="w-100 mx-auto align-items-center border mt-8 mb-8 p-4 rounded shadow bg-white d-none" id="divCanvisVisuals">
+              <!-- w-100  = width: 100% -->
+              <a href="#" class="close" data-dismiss="alert" aria-label="close" id="tancaDivCanvis">
+                <h3>&times;</h3>
+              </a>
+              <h2 class="text-center">Millores visuals a l'app</h2>
+              <p class="text-center">Les millores a la app visualment són les següents:</p>
+            </div>
+            <!-- FINAL divPacients -->
+          <!-- ------------------------------------------------------------------------------------ -->
         <!-- ==================================================================================== -->   
         </div>
         <!-- INICI COLUMNA 2 >md 10 < -- >  modul divPanellEscriptori -->
