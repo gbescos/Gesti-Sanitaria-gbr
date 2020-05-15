@@ -8,6 +8,7 @@ const eleID_text_missatge = document.getElementById("h3BarraMissatges");
 const eleID_divPresentacio = document.getElementById("divPresentacio");
 const eleID_divHospital = document.getElementById("divHospital");
 const eleID_divPacient = document.getElementById("divPacient");
+const eleID_divTractament = document.getElementById("divTractament");
 
 const eleID_divControls = document.getElementById("divControls");
 
@@ -229,11 +230,12 @@ function ocultaGestioPacients(objecteRebut){
       eleID_divControls.classList.toggle("d-none");
       mostraBotons();
    }
+var hospital;
 function crearHospital() {
       var nom = document.getElementById("inputNomHospital").value.toString();
       var maximPacients = parseInt(document.getElementById("maximPacientsHospital").value);
       if (nom !== "" && maximPacients > 0) {
-            var hospital = new Hospital(nom, maximPacients);
+            hospital = new Hospital(nom, maximPacients);
             ocultaGestioHospital(this);
             mostraGestioPacients(this);
             var cadenaFilaPacient_1, cadenaFilaPacient_2, cadenaFilaPacient_3;
@@ -263,3 +265,77 @@ function crearHospital() {
       }
 }
 
+function ingressarPacients() {
+
+      var nom = "";
+      var malaltia = "";
+      for (var pacient = 0; pacient < hospital.maximPacients; pacient++) {
+            nom = document.getElementById("nomPacient" + pacient.toString()).value.toString();
+            console.log(nom);
+            malaltia = document.getElementById("malaltia" + pacient.toString()).value.toString();
+            console.log(malaltia);
+
+            if (nom !== "" && malaltia !== "") {
+                  if (hospital !== null) {
+                        hospital.ingressarPacient(new Pacient(nom, malaltia));
+                  }
+            }else{
+                  alert("Error. Has de omplir tots els camps");
+                  return false;
+            }
+      }
+
+      if (hospital !== null && (hospital.pacientsIngressats.length <= hospital.maximPacients)) {
+            eleID_divPacient.classList.toggle("d-none");
+            eleID_divTractament.classList.toggle("d-none");
+            for (var pacient = 0; pacient < hospital.pacientsIngressats.length; pacient++) {
+                  console.log(pacient);
+                  document.getElementById("dadesGestio").innerHTML += ('<div class="row" id="dadesGestioPacient' + pacient.toString() + '">' +
+                        '<div class="col mb-3">' +
+                        '<label for="nomPacientGestio" class="font-weight-bold">Nom: </label>   <p id="nomPacientGestio' + pacient.toString() + '">' + hospital.pacientsIngressats[pacient].nom + '</p>' +
+                        '</div>' +
+                        '<div class="col mb-3">' +
+                        '<label for="malaltia" class="font-weight-bold">Malaltia: </label>  <p id="malaltiaGestio' + pacient.toString() + '">' + hospital.pacientsIngressats[pacient].malaltia + '</p>' +
+                        '</div>' +
+                        '<div class="col mb-3">' +
+                        '<button class="btn btn-success" title="Si el pacient s\'ha recuperat, el donarem d\'alta fent clic a aquest botó!" onClick="gestioDonarDalta(' + pacient + ')">Donar d\'alta</button> <button class="btn btn-danger" title="Si el pacient es mor, declarem la defunció fent clic a aquest botó!" onClick="gestioMorir(' + pacient + ')">Morir</button>' +
+                        '<div class="col mb-3">' +
+                        '</div>');
+            }
+
+      }
+}
+
+function gestioDonarDalta(llitPacient) {
+      hospital.donarDaltaPacient(llitPacient);
+      document.getElementById("dadesGestioPacient" + llitPacient.toString()).remove();
+
+      if (totsLlitsBuits())
+            dadesGestio.innerHTML = ('<p class="text-center">L\'Hospital ' + hospital.nomHospital + ' no té cap pacient ingressat en aquests moments.</p>' +
+                  '<div class="text-center">' +
+                  '<button type="button" class="btn btn-primary mt-4" title="Per tornar a poder ingressar pacients fes clic!" onClick="window.location.reload()">Torna a la pantalla inicial</button>' +
+                  '</div>');
+}
+
+function gestioMorir(llitPacient) {
+      hospital.morirPacient(llitPacient);
+      document.getElementById("dadesGestioPacient" + llitPacient.toString()).remove();
+
+      if (totsLlitsBuits())
+            dadesGestio.innerHTML = ('<p class="text-center">L\'Hospital ' + hospital.nomHospital + ' no té cap pacient ingressat en aquests moments.</p>' +
+                  '<div class="text-center">' +
+                  '<button type="button" class="btn btn-primary mt-4" title="Per tornar a poder ingressar pacients fes clic!" onClick="window.location.reload()">Torna a la pantalla inicial</button>' +
+                  '</div>');
+}
+
+function totsLlitsBuits() {
+      var llitsBuits = true;
+      var llit = 0;
+
+      while (llitsBuits && llit < hospital.pacientsIngressats.length) {
+            llitsBuits = Object.keys(hospital.pacientsIngressats[llit]).length === 0;
+            llit++;
+      }
+
+      return llitsBuits;
+}

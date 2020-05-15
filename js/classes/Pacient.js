@@ -2,8 +2,8 @@
 
 class Pacient {
   constructor(nom, malaltia) {
-    nom = nom;
-    malaltia = malaltia;
+    this.nom = nom;
+    this.malaltia = malaltia;
   }
 }
 
