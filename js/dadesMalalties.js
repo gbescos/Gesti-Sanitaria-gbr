@@ -25,3 +25,18 @@ const llistaMalalties = ['Alzheimer','Anells vasculars','Atrèsia pulmonar amb c
                     'Tumor extraocular en la infància (Rabdomiosarcoma)',
                     'Tumor intraocular en la infància (Retinoblastoma)','Tumors d’òrbita','Ventricle únic',
                     'Virus del papil·loma humà (VPH)'];
+
+function omplirSelects(){
+    var etCapMalaltia = "capMalaltia";
+    var objSelect;
+    /* Creació d'un objecte llisa desplegable, que ompliré amb tots els elements
+    ** de la matriu que acabo de crear llistaMalalties 
+    ** */
+
+    objSelect = `<option value=\"${etCapMalaltia}\">------ Escull un malaltia ------</option>`;
+    for (var indexMalaltia = 0; indexMalaltia < llistaMalalties.length; indexMalaltia++) {
+        objSelect += `<option value=\"${llistaMalalties[indexMalaltia]}\">${llistaMalalties[indexMalaltia]}</option>`;
+    }
+    objSelect += '</select>';
+    return objSelect;
+}

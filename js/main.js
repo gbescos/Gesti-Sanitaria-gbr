@@ -317,8 +317,8 @@ function crearHospital() {
                   '  </div> <!-- <div class="col mb-3"> -->' +
                   '  <div class="col mb-3">' +
                   '    <label for="malaltia" class="font-weight-bold">Malaltia a tractar: </label>' +
-                  '    <input type="text" id="malaltia';
-            cadenaFilaPacient_3 = '" class="form-control" required minlength="1" maxlength="100" />' +
+                  '    <select id="malaltia';
+            cadenaFilaPacient_3 = '"/>' +
                   '  </div> <!-- <div class="col mb-3"> -->' +
                   '</div> <!-- <div class="row"> -->';
 
@@ -329,8 +329,9 @@ function crearHospital() {
                         cadenaFilaPacient_2 +
                         pacient.toString() +
                         cadenaFilaPacient_3);
+                  document.getElementById("malaltia" + pacient.toString()).innerHTML = omplirSelects();
             }
-
+            
       }
 }
 
