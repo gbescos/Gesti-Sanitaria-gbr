@@ -1,5 +1,51 @@
 'use strict'
 
+//JQUERY per canviar el tema de la web de color
+$(document).ready(function () {
+      $('#canviatemaw').hide();
+      console.log("ready!");
+      $("#canviatemab").click(function () {
+            $('body').css("background-color", "black");
+            $('body').css("color", "white");
+            $('#canviatemab').hide();
+            $('#canviatemaw').show();
+      });
+      $("#canviatemaw").click(function () {
+            $('body').css("background-color", "white");
+            $('body').css("color", "black");
+            $('#canviatemaw').hide();
+            $('#canviatemab').show();
+      });
+
+      //Fer zoom al navegador
+      var currentZoom = 1;
+      $('#zoomin').click(function () {
+            if (currentZoom < 1.3) {
+                  currentZoom += 0.1;
+                  $('body').css({
+                        zoom: currentZoom,
+                        '-moz-transform': 'scale(' + currentZoom + ')'
+                  });
+            }
+      });
+      $('#zoomout').click(function () {
+            if (currentZoom >= 0.8) {
+                  currentZoom -= 0.1;
+                  $('body').css({
+                        zoom: currentZoom,
+                        '-moz-transform': 'scale(' + currentZoom + ')'
+                  });
+            }
+      });
+      $('#zoomdef').click(function () {
+            currentZoom = 1;
+            $('body').css({
+                  zoom: currentZoom,
+                  '-moz-transform': 'scale(' + currentZoom + ')'
+            });
+      });
+});
+
 const eleID_divEspaiModal = document.getElementById("divEspaiModal");
 
 const eleID_barra_missatges = document.getElementById("divBarraMissatges");
@@ -12,10 +58,13 @@ const eleID_divTractament = document.getElementById("divTractament");
 
 const eleID_divControls = document.getElementById("divControls");
 
+const eleID_divcanvis = document.getElementById("divCanvisVisuals");
+
 const eleID_btnGestHospitals = document.getElementById("btnGestHospitals");
 const eleID_btnGestPacients = document.getElementById("btnGestPacients");
 const eleID_btnGestMalalties = document.getElementById("btnGestMalalties");
 const eleID_btnGestMetges = document.getElementById("btnGestMetges");
+const eleID_btnCanVis = document.getElementById("btnCanVis");
 
 const eleID_btnGestAplicacio = document.getElementById("btnGestAplicacio");
 
@@ -94,6 +143,7 @@ function mostraBotons() {
       eleID_btnGestMalalties.disabled = false;
       eleID_btnGestMetges.disabled = false;
       eleID_btnGestAplicacio.disabled = false;
+      eleID_btnCanVis.disabled = false;
 
       $(eleID_btnGestHospitals).removeClass('btn-dark');
       $(eleID_btnGestHospitals).addClass('btn-primary');
@@ -109,6 +159,9 @@ function mostraBotons() {
 
       $(eleID_btnGestAplicacio).removeClass('btn-dark');
       $(eleID_btnGestAplicacio).addClass('btn-primary');
+
+      $(eleID_btnCanVis).removeClass('btn-dark');
+      $(eleID_btnCanVis).addClass('btn-primary');
 }
 
 function amagaBotons() {
@@ -117,6 +170,7 @@ function amagaBotons() {
       eleID_btnGestMalalties.disabled = true;
       eleID_btnGestMetges.disabled = true;
       eleID_btnGestAplicacio.disabled = true;
+      eleID_btnCanVis.disabled = true;
 
       $(eleID_btnGestHospitals).removeClass('btn-primary');
       $(eleID_btnGestHospitals).addClass('btn-dark');
@@ -132,6 +186,10 @@ function amagaBotons() {
 
       $(eleID_btnGestAplicacio).removeClass('btn-primary');
       $(eleID_btnGestAplicacio).addClass('btn-dark');
+
+      $(eleID_btnCanVis).removeClass('btn-primary');
+      $(eleID_btnCanVis).addClass('btn-dark');
+     
 }
 
 
@@ -182,6 +240,17 @@ function eliminaClass(elementRebut, nomClass) {
       amagaBotons();
    }
 
+
+function mostraCanvisVisuals(objecte) {
+      document.getElementById('tancaDivCanvis').onclick = function tanca() {
+            eleID_divPresentacio.classList.toggle("d-none");
+            eleID_divcanvis.classList.toggle("d-none");
+            mostraBotons();
+      }
+      eleID_divPresentacio.classList.toggle("d-none");
+      eleID_divcanvis.classList.toggle("d-none");
+      amagaBotons();
+}
 
     function mostraGestioMetges(objecte){
           mostraMissatge(0);
@@ -273,7 +342,6 @@ function ingressarPacients() {
             nom = document.getElementById("nomPacient" + pacient.toString()).value.toString();
             console.log(nom);
             malaltia = document.getElementById("malaltia" + pacient.toString()).value.toString();
-            console.log(malaltia);
 
             if (nom !== "" && malaltia !== "") {
                   if (hospital !== null) {
