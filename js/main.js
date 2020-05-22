@@ -336,7 +336,11 @@ function crearHospital() {
 }
 
 function ingressarPacients() {
-
+      if (hospital === undefined) {
+            alert("Error. Has de crear primer l'hospital");
+            ocultaGestioPacients(this);
+            mostraGestioHospital(this);
+      }
       var nom = "";
       var malaltia = "";
       for (var pacient = 0; pacient < hospital.maximPacients; pacient++) {
