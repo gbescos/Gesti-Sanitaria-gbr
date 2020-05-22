@@ -13,12 +13,12 @@ class Hospital{
     }
 
     donarDaltaPacient(llitPacient) {
-      alert("S'ha donat d'alta el/la pacient " + this.pacientsIngressats[llitPacient].nom + " de la malaltia " + this.pacientsIngressats[llitPacient].malaltia);
+      alert("S'ha donat d'alta el/la pacient " + this.pacientsIngressats[llitPacient].nom + " " + this.pacientsIngressats[llitPacient].cognom + " amb NIF: " + this.pacientsIngressats[llitPacient].nif +" de la malaltia " + this.pacientsIngressats[llitPacient].malaltia);
       this.pacientsIngressats[llitPacient] = {};
     }
 
     morirPacient(llitPacient) {
-      alert("Encara que s'ha fet tot el que s'ha pogut, el/la pacient " + this.pacientsIngressats[llitPacient].nom + " ha mort de la malaltia " + this.pacientsIngressats[llitPacient].malaltia);
+      alert("Encara que s'ha fet tot el que s'ha pogut, el/la pacient " + this.pacientsIngressats[llitPacient].nom + " " + this.pacientsIngressats[llitPacient].cognom + " amb NIF: " + this.pacientsIngressats[llitPacient].nif +" ha mort de la malaltia " + this.pacientsIngressats[llitPacient].malaltia);
       this.pacientsIngressats[llitPacient] = {};
     }
 
